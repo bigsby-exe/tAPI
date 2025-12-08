@@ -103,6 +103,46 @@ Or use `docker-compose` for development:
 docker-compose up --build
 ```
 
+Deployment (Render)
+--------------------
+
+This project is configured for deployment on [Render](https://render.com) using native Python (no Docker required).
+
+### Quick Setup
+
+1. **Connect your repository:**
+   - Sign up/login to [Render](https://render.com)
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository
+   - Render will auto-detect the `render.yaml` configuration
+
+2. **Set environment variables:**
+   In the Render dashboard, add these environment variables:
+   - `API_KEY`: A strong secret key for API authentication
+   - `DATABASE_URL`: Your PostgreSQL connection string
+     - For Supabase: `postgresql://user:password@db.supabase.co:5432/dbname`
+     - For Render PostgreSQL: Create a PostgreSQL service first, then use the internal connection string
+
+3. **Deploy:**
+   - Render will automatically build and deploy using the `render.yaml` configuration
+   - The service will be available at `https://your-service-name.onrender.com`
+
+### Database Options
+
+- **Supabase** (recommended for free tier): Create a free PostgreSQL database at [supabase.com](https://supabase.com)
+- **Render PostgreSQL**: Create a PostgreSQL service in Render and use the provided connection string
+
+### Configuration
+
+The `render.yaml` file configures:
+- Python 3.12 runtime
+- Automatic dependency installation from `requirements.txt`
+- Health check endpoint at `/health`
+- Port configuration (uses Render's `$PORT` variable)
+
+For manual configuration without `render.yaml`, use:
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `PYTHONPATH=src uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
 Database schema notes
 ---------------------
