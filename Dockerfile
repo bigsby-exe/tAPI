@@ -19,7 +19,6 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # copy app
 COPY src /app/src
-COPY .env.example /app/.env.example
 
 ENV PATH="/home/appuser/.local/bin:$PATH"
 RUN chown -R appuser:appuser /app
