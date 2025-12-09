@@ -28,6 +28,7 @@ class TodoCreate(BaseModel):
 
 class TodoRead(TodoCreate):
     """Schema for reading a todo item with all fields including metadata."""
+    status: Optional[str] = Field(None, description="Status of the todo (e.g., 'todo', 'in_progress', 'done')", example="todo")
     id: UUID = Field(..., description="Unique identifier for the todo item", example="123e4567-e89b-12d3-a456-426614174000")
     created_at: datetime = Field(..., description="Timestamp when the todo was created", example="2024-01-15T10:30:00")
     updated_at: Optional[datetime] = Field(None, description="Timestamp when the todo was last updated", example="2024-01-16T14:20:00")
